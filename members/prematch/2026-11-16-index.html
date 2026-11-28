@@ -1,0 +1,36 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>OnTheOche</title><style>
+body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#14233a;color:#fff;display:flex;min-height:100vh;align-items:center;justify-content:center}
+form{background:#1f3a5f;padding:28px;border-radius:12px;width:min(340px,90vw);text-align:center}
+h1{font-size:20px;margin:0 0 16px}input{width:100%;padding:11px;font-size:16px;border-radius:6px;border:0;box-sizing:border-box}
+button{margin-top:12px;width:100%;padding:11px;font-size:16px;border:0;border-radius:6px;background:#ffd166;font-weight:700;cursor:pointer}
+p{color:#ff9b9b;min-height:18px;font-size:13px;margin:10px 0 0}</style></head><body>
+<form id="f"><h1>OnTheOche · Members</h1><input id="p" type="password" placeholder="Password" autofocus>
+<button>View</button><p id="e"></p></form>
+<script>
+(()=>{
+const D={"s": "KKQnoGNCH/jLsUJuiL2OBg==", "i": "I+xSHBAkMIGYaLfx", "c": "j+deqDrrNdDUepiqdFMyEQPP7Ip08okyZ+YOc69UQnUqnwxu6XHNDr2jdYCuvcfCIDxXtNfu/g9zJWmia787ygoLqGYjDPgeOZLJobVV1wA8gJgU8QlSughrUouesYv6zPms1pN3FIwya4YSqRPBEXg1iM19exsAXtby9XOacypvfyk/Q0CmtPKxfTkJdHQ7x9i3jahjXOdwr5Gtn0OKTfPwNIlqWfvcjIbiSEIqbsPaUc4oqHsyhaCbD4tzasGW4aNQexn9XlH2f6qf7y0vkdAuIVwNTtETBly5cTvCXY883l0WOBjvBngkxu9STGutBDHSaCQHiPk7bv/ICe/wEvPxKgBmECsMCYy+p04DnDwkZRNlrVOSa5Bgt8hrU+t0aoCQngelmYznlnzDra7Z8QlIEgT6s9Ho7qjHAbDx2tQrzvPYfKonjSbj1OVcU1HZ6jgsW8vZyhf3yIIDwwHb+Pd+SIegSnhSYRspdJDnXgnZgIRgAGppijoYJn4cL8FBvtNm2xvGdpx/GwBLyo8i0LpDccyYYSQswWOdl4zy8f0cEs7ulf3Kjs1QQKwb0eMeuqxzBt+cHCC+5d3Ni64yIFCtq1xDcWBhiSMQzFAaQbdqcCHGBkxDDr1QZSGYItxs41Vx3mXh8SLPUI6VUVd4bcZ3wzhk3mHXHjQyG6bvzuDbk88zinL6suE7+5t9kmkCU6xYLW+PeakpU2r5IL9NNOkVWgAIHgcIhdkJQavxpye9L/5aOG6+zxHiXcUwA4lKpNZhpaP0Wnr/zE2YlKThs1U9pfuxFuVzx04m7S7kqk06OJD/01nQZnXLsrWqD+Y6NuvMECNoc9UXmXA8o/5D35HgRODZBRRSmVYJhWnk9O1ul0Zzu4Ad5itttj48EznPGM+e5/RixGvfoHYEq2nFsGxFQb9ijnOAbxcSjMggevQDw765RKYb8fZSKJDK8pPogUlEc34BoECuCMRCuzJ9DjbVVRzCXbJlAo+jwu0n5FIevNH1UqxsNCisVksEsDGTTth+yeAOo216XfUWqVLwZz9MmvJVpouiv3Icgavat3j5yXBlqVG9TubXrOF/YtcFQBY9npM3GnkN6nBjUoeVBWSDXIWTRZp83dlkVtTnjvdl6hzRmPKrDN+1XW052sGtlPwYGbAJMWisonSkIBhBNXVsiFNeSB5qFEyNRWmv/bcI4Zoh00ImiSS2UVWqfGUa/MCitqlJ2xEStmkUktETyB7PLibFYjzVZSAQh6COv6HLQ5X8QDD4TK5+uji+TBqQT7OkCyO0tErAWgQY39sRubHpUHEsdR3PteXj3QbvLt0H4M5t7sWvblpHxWVeE1/iQBMnUS4RXl8f7zz2addLAqnVU9FQm5d7tqVVgQ==", "n": 300000, "z": 1};
+const b=s=>{const t=atob(s),u=new Uint8Array(t.length);for(let i=0;i<t.length;i++)u[i]=t.charCodeAt(i);return u};
+async function open_(pw){
+  const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
+  const k=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b(D.s),iterations:D.n,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['decrypt']);
+  let pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b(D.i)},k,b(D.c));
+  if(D.z)pt=await new Response(new Blob([pt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+  return new TextDecoder().decode(pt);
+}
+function show(h){document.open();document.write(h);document.close()}
+async function tryPw(pw,quiet){
+  const m=document.getElementById('e');if(!quiet)m.textContent='Opening...';
+  try{const h=await open_(pw);try{localStorage.setItem('oche_pw',pw)}catch(e){};show(h);return true}
+  catch(e){if(!quiet)m.textContent='Wrong password';return false}
+}
+(async()=>{
+  let pw=null;
+  if(location.hash.startsWith('#pw=')){pw=decodeURIComponent(location.hash.slice(4));history.replaceState(null,'',location.pathname)}
+  else{try{pw=localStorage.getItem('oche_pw')}catch(e){}}
+  if(pw)await tryPw(pw,true);
+})();
+document.getElementById('f').onsubmit=e=>{e.preventDefault();tryPw(document.getElementById('p').value,false)};
+})();
+</script></body></html>
